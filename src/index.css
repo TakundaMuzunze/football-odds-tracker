@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 @theme :root {
-  --color-text: #e1e7ec;
-  --color-default-background: #080d12;
+  --color-primary-text: #e1e7ec;
+  --color-background: #080d12;
   --color-primary: #97bade;
   --color-secondary: #1b518b;
   --color-accent: #3d91ec;
@@ -11,14 +11,15 @@
 
 @layer base {
   [data-theme='light'] {
-    --color-text: #141a1f;
-    --color-default-background: #edf2f7;
+    --color-primary-text: #141a1f;
+    --color-background: #edf2f7;
     --color-primary: #214569;
     --color-secondary: #72a9e3;
     --color-accent: #1368c3;
   }
 
   body {
+    background-color: var(--color-background);
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 }
