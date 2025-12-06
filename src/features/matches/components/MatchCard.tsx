@@ -1,4 +1,4 @@
-import { decimalToFraction } from '../../../helpers/convertDecimal';
+import { decimalToFraction } from '../../../shared/helpers/convertDecimal';
 import type { Match, MatchOdds } from '../../../types/match';
 
 type OddsType = 'home' | 'draw' | 'away';

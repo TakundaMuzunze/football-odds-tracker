@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
 import './App.css';
-import { Header } from './components/layout/header/Header';
-import { SidebarPanel } from './components/layout/sidebar-panel/Sidebar-Panel';
+import { Header } from './shared/layout/header/Header';
+import { SidebarPanel } from './shared/layout/sidebar-panel/Sidebar-Panel';
 
 function App() {
   return (

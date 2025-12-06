@@ -1,4 +1,4 @@
-import type { IconName } from '../components/ui/icons/iconData';
+import type { IconName } from '../shared/ui/icons/iconData';
 
 export interface SidebarItem {
   id: string;
