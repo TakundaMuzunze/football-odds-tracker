@@ -1,10 +1,10 @@
-import { NAVIGATION_LINKS } from '../../../constants/navigation-links';
+import { NAVIGATION_LINKS } from '../../constants/navigation-links';
 
 export function Header() {
   const currentPath = window.location.pathname;
 
   return (
-    <nav className="flex flex-row items-center justify-start gap-4 p-5 border-b border-gray-700">
+    <nav className="flex flex-row items-center justify-start gap-4 border-b border-gray-700 p-5">
       <div className="flex gap-6">
         {NAVIGATION_LINKS.map((link) => {
           const isActive = currentPath === link.href;
