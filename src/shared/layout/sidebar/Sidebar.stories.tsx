@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SidebarPanel } from './Sidebar-Panel';
+import { SidebarPanel } from './Sidebar';
 
 const meta: Meta<typeof SidebarPanel> = {
-  title: 'Layout/SidebarPanel',
+  title: 'Layout/Sidebar',
   component: SidebarPanel,
   parameters: {
     layout: 'fullscreen',

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { SIDEBAR_GROUPS } from '../../../constants/sidebarItems';
 import { Icon } from '../../ui/icons/Icon';
+import { SIDEBAR_GROUPS } from '../../constants/sidebarItems';
 
 export function SidebarPanel() {
   const [openGroups, setOpenGroups] = useState<string[]>(() => SIDEBAR_GROUPS.filter((g) => g.title && g.title !== 'Overview').map((g) => g.title!));
