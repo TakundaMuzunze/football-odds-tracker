@@ -9,30 +9,50 @@ const __dirname = path.dirname(__filename);
 config({ path: path.join(__dirname, '.env') });
 
 export class ApiClient {
-  private baseURL = process.env.SPORTSMONKS_BASE_URL || '';
-  private apiKey = process.env.SPORTSMONKS_API_KEY || '';
+  private baseURL = process.env.APIFOOTBALL_BASE_URL || '';
+  private apiKey = process.env.APIFOOTBALL_API_KEY || '';
 
   constructor() {
     if (!this.baseURL) {
-      throw new Error('SPORTMONKS_BASE_URL environment variable is required');
+      throw new Error('BASE_URL environment variable is required');
     }
     if (!this.apiKey) {
-      throw new Error('SPORTMONKS_API_KEY environment variable is required');
+      throw new Error('API_KEY environment variable is required');
     }
   }
 
-  private buildURL(endpoint: string) {
-    const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
-    const cleanBase = this.baseURL.endsWith('/') ? this.baseURL.slice(0, -1) : this.baseURL;
-    const url = new URL(`${cleanBase}/${cleanEndpoint}`);
-    url.searchParams.append('api_token', this.apiKey);
+  private buildURL(endpoint: string, params?: Record<string, any>) {
+    const base = this.baseURL.endsWith('/') ? this.baseURL.slice(0, -1) : this.baseURL;
+    const cleanPath = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+    const url = new URL(`${base}/${cleanPath}`);
+
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          url.searchParams.append(key, String(value));
+        }
+      });
+    }
+
     return url.toString();
   }
 
-  async get<T>(endpoint: string): Promise<T> {
-    const url = this.buildURL(endpoint);
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`API Error: ${res.status}`);
+  async get<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
+    const url = this.buildURL(endpoint, params);
+
+    const res = await fetch(url, {
+      headers: {
+        'x-apisports-key': this.apiKey,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text().catch(() => 'Failed to read error response');
+      console.error('Server API Error:', res.status, errorText);
+      throw new Error(`API Error: ${res.status} ${res.statusText} - ${errorText}`);
+    }
+
     return res.json() as Promise<T>;
   }
 }
