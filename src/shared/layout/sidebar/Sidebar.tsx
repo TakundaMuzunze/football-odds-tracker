@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 import { Icon } from '../../ui/icons/Icon';
 import { SIDEBAR_GROUPS } from '../../constants/sidebarItems';
 
@@ -44,14 +45,14 @@ export function SidebarPanel() {
                 }`}
               >
                 {group.items.map((item) => (
-                  <a
+                  <Link
                     key={item.id}
-                    href={item.href}
+                    to={item.href}
                     className="text-primary-text flex cursor-pointer items-center gap-3 rounded-md px-4 py-2 transition-colors hover:bg-gray-700/50 hover:text-white"
                   >
                     {item.icon && <Icon name={item.icon} className="size-5 stroke-2 text-white" />}
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
