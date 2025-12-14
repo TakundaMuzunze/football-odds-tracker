@@ -2,12 +2,10 @@ import { apiConfig } from '../config/api';
 
 class ApiClient {
   private baseURL = apiConfig.baseURL;
-  private apiKey = apiConfig.apiKey;
 
   private buildURL(endpoint: string, params?: Record<string, any>) {
-    const url = new URL(endpoint, this.baseURL);
-
-    url.searchParams.append('api_token', this.apiKey);
+    const path = `${this.baseURL.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
+    const url = new URL(path, window.location.origin);
 
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
@@ -20,11 +18,12 @@ class ApiClient {
 
   async get<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
     const url = this.buildURL(endpoint, params);
-
     const res = await fetch(url);
 
     if (!res.ok) {
-      throw new Error(`API Error: ${res.status}`);
+      const errorText = await res.text().catch(() => 'Failed to read error response');
+      console.error('Frontend API Error:', res.status, errorText);
+      throw new Error(`API Error: ${res.status} ${res.statusText} - ${errorText}`);
     }
 
     return res.json();
