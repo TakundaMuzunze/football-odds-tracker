@@ -11,7 +11,7 @@ function App() {
       <main className="flex flex-1 flex-col">
         <Header />
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto px-5 py-10">
           <Outlet />
         </div>
       </main>
