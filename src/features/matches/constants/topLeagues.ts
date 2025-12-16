@@ -14,7 +14,18 @@ export const TOP_LEAGUES: League[] = [
   { name: 'Serie A', countries: ['Italy'], id: 135 },
 ] as const;
 
+export const DOMESTIC_CUPS: League[] = [
+  { name: 'FA Cup', countries: ['England', 'UK', 'United Kingdom'], id: 45 },
+  { name: 'League Cup', countries: ['England', 'UK', 'United Kingdom'], id: 48 },
+  { name: 'Copa del Rey', countries: ['Spain'], id: 143 },
+  { name: 'DFB-Pokal', countries: ['Germany'], id: 81 },
+  { name: 'Coupe de France', countries: ['France'], id: 66 },
+  { name: 'Coppa Italia', countries: ['Italy'], id: 137 },
+] as const;
+
+export const ALL_TOP_COMPETITIONS = [...TOP_LEAGUES, ...DOMESTIC_CUPS] as const;
+
 export function isTopLeague(leagueName: string, country: string): boolean {
-  return TOP_LEAGUES.some((league) => league.name === leagueName && league.countries.includes(country));
+  return ALL_TOP_COMPETITIONS.some((league) => league.name === leagueName && league.countries.includes(country));
 }
 
