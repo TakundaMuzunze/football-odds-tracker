@@ -13,7 +13,7 @@ export function SidebarPanel() {
   };
 
   return (
-    <aside className="bg-surface flex h-screen w-52 shrink-0 flex-col items-center justify-center gap-6 px-4 py-10">
+    <aside className="bg-surface flex h-screen w-68 shrink-0 flex-col items-center justify-center gap-6 px-4 py-10">
       <nav className="flex h-full w-full flex-col gap-6">
         {SIDEBAR_GROUPS.map((group, groupIndex) => {
           const isOverview = group.title === 'Overview';
