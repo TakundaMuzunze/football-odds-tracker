@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { MatchCard } from '../MatchCard';
+import { MatchPanel } from '../MatchPanel';
 import type { MatchFixture, MatchOdds } from '../../types/match';
 import { fetchLiveMatches } from '../../services/matchService';
 import { isTopLeague } from '../../constants/topLeagues';
@@ -34,6 +34,20 @@ export function LiveMatchesSection() {
     return allMatches.filter((match) => isTopLeague(match.league.name, match.league.country));
   }, [allMatches]);
 
+  const groupedMatches = useMemo(() => {
+    return matches.reduce(
+      (acc, match) => {
+        const leagueName = match.league.name;
+        if (!acc[leagueName]) {
+          acc[leagueName] = [];
+        }
+        acc[leagueName].push(match);
+        return acc;
+      },
+      {} as Record<string, MatchFixture[]>,
+    );
+  }, [matches]);
+
   const handleOddsClick = (type: keyof MatchOdds, odds: number) => {
     // TODO: implement odds click handler
     console.log(`Clicked ${type} odds: ${odds}`);
@@ -52,13 +66,15 @@ export function LiveMatchesSection() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6 py-4">
         {loading ? (
           <div className="rounded-lg bg-gray-800 p-8 text-center text-gray-400">Loading matches...</div>
         ) : error ? (
           <div className="rounded-lg bg-red-900/20 p-8 text-center text-red-400">{error}</div>
         ) : matches.length > 0 ? (
-          matches.map((match) => <MatchCard key={match.fixture.id} fixture={match} onOddsClick={handleOddsClick} />)
+          Object.entries(groupedMatches).map(([leagueName, leagueMatches]) => (
+            <MatchPanel key={leagueName} leagueName={leagueName} matches={leagueMatches} onOddsClick={handleOddsClick} />
+          ))
         ) : (
           <div className="rounded-lg bg-gray-800 p-8 text-center text-gray-400">No live matches at the moment</div>
         )}
