@@ -14,29 +14,9 @@ const meta: Meta<typeof MatchCard> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    homeTeam: {
-      control: 'text',
-      description: 'Name of the home team',
-    },
-    awayTeam: {
-      control: 'text',
-      description: 'Name of the away team',
-    },
-    homeScore: {
-      control: 'number',
-      description: 'Home team score',
-    },
-    awayScore: {
-      control: 'number',
-      description: 'Away team score',
-    },
-    matchTime: {
-      control: 'text',
-      description: 'Match time or status',
-    },
-    league: {
-      control: 'text',
-      description: 'League name (optional)',
+    fixture: {
+      control: 'object',
+      description: 'Match fixture data containing teams, scores, league, and status',
     },
     odds: {
       control: 'object',
@@ -55,16 +35,40 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    homeTeam: 'Manchester United',
-    awayTeam: 'Liverpool',
-    homeScore: 2,
-    awayScore: 1,
-    matchTime: "90+3'",
-    league: 'English Premier League',
+    fixture: {
+      fixture: {
+        id: 1,
+        date: new Date().toISOString(),
+        status: {
+          long: 'Match Finished',
+          short: 'FT',
+          elapsed: 90,
+        },
+      },
+      teams: {
+        home: {
+          id: 33,
+          name: 'Manchester United',
+        },
+        away: {
+          id: 40,
+          name: 'Liverpool',
+        },
+      },
+      goals: {
+        home: 2,
+        away: 1,
+      },
+      league: {
+        id: 39,
+        name: 'English Premier League',
+        country: 'England',
+      },
+    },
     odds: {
       home: 1.5,
+      draw: 2.0,
       away: 3.7,
-      draw: 2,
     },
   },
   parameters: {
@@ -78,16 +82,40 @@ export const Default: Story = {
 
 export const LiveMatch: Story = {
   args: {
-    homeTeam: 'Arsenal',
-    awayTeam: 'Chelsea',
-    homeScore: 1,
-    awayScore: 0,
-    matchTime: "67'",
-    league: 'English Premier League',
+    fixture: {
+      fixture: {
+        id: 2,
+        date: new Date().toISOString(),
+        status: {
+          long: 'Second Half',
+          short: '2H',
+          elapsed: 67,
+        },
+      },
+      teams: {
+        home: {
+          id: 42,
+          name: 'Arsenal',
+        },
+        away: {
+          id: 49,
+          name: 'Chelsea',
+        },
+      },
+      goals: {
+        home: 1,
+        away: 0,
+      },
+      league: {
+        id: 39,
+        name: 'Premier League',
+        country: 'England',
+      },
+    },
     odds: {
       home: 1.5,
+      draw: 2.0,
       away: 3.7,
-      draw: 2,
     },
   },
   parameters: {
@@ -101,16 +129,40 @@ export const LiveMatch: Story = {
 
 export const UpcomingMatch: Story = {
   args: {
-    homeTeam: 'Tottenham',
-    awayTeam: 'Manchester City',
-    homeScore: 0,
-    awayScore: 0,
-    matchTime: '15:30',
-    league: 'English Premier League',
+    fixture: {
+      fixture: {
+        id: 3,
+        date: new Date().toISOString(),
+        status: {
+          long: 'Not Started',
+          short: 'NS',
+          elapsed: null,
+        },
+      },
+      teams: {
+        home: {
+          id: 47,
+          name: 'Tottenham',
+        },
+        away: {
+          id: 50,
+          name: 'Manchester City',
+        },
+      },
+      goals: {
+        home: null,
+        away: null,
+      },
+      league: {
+        id: 39,
+        name: 'Premier League',
+        country: 'England',
+      },
+    },
     odds: {
       home: 1.5,
+      draw: 2.0,
       away: 3.7,
-      draw: 2,
     },
   },
   parameters: {
