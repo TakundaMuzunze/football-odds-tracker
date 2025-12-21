@@ -6,7 +6,7 @@ export function Header() {
   const currentPath = location.pathname;
 
   return (
-    <nav className="flex flex-row items-center justify-start gap-4 border-b border-gray-700 p-5">
+    <nav className="flex flex-row items-center justify-start gap-4 border-b border-gray-700 px-10 py-5">
       <div className="flex gap-6">
         {NAVIGATION_LINKS.map((link) => {
           const isActive = currentPath === link.href;
